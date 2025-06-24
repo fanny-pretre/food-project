@@ -1,0 +1,13 @@
+# Nom de l'application
+spring.application.name=foodiesapi
+
+# Configuration MongoDB
+# Si tu travailles en local, garde cette URL, sinon remplace avec le format d'une URI distante
+spring.data.mongodb.uri=mongodb://localhost:27017/foodies
+
+# Configuration AWS S3
+# Remplace les valeurs entre < > avec tes vraies clés dans le fichier réel (jamais ici !)
+aws.access.key=<YOUR_AWS_ACCESS_KEY_ID>
+aws.secret.key=<YOUR_AWS_SECRET_KEY_ID>
+aws.region=<YOUR_AWS_REGION> # exemple : eu-west-3
+aws.s3.bucketname=<YOUR_AWS_BUCKETNAME> # exemple : foodies-foods
