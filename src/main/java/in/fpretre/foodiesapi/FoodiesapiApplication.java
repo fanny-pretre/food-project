@@ -1,4 +1,4 @@
-package in.bushansirgur.foodiesapi;
+package in.fpretre.foodiesapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

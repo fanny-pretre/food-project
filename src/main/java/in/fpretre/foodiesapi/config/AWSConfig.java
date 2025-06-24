@@ -1,4 +1,4 @@
-package in.bushansirgur.foodiesapi.config;
+package in.fpretre.foodiesapi.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;

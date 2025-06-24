@@ -1,21 +1,22 @@
-package in.bushansirgur.foodiesapi.request;
+// C'est ce que je vais renvoyer au front 
+
+package in.fpretre.foodiesapi.io;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor; 
 
 @Data
-
-// Méthode de Lombok pour créer un constructeur avec tous les arguments
 @AllArgsConstructor
-// Méthode de Lombok pour créer un constructeur vide 
 @NoArgsConstructor
+@Builder
 
-public class FoodRequest {
-
+public class FoodResponse {
+    private String id;
     private String name; 
     private String description;
+    private String imageUrl; 
     private double price; 
     private String category; 
-
 }
