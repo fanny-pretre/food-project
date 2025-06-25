@@ -46,7 +46,7 @@ public class FoodServiceImpl implements FoodService{
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
         .bucket(bucketName)
         .key(key)
-        .acl("public read")
+        .acl("public-read")
         .contentType(file.getContentType())
         .build();
 
