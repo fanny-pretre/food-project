@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import java.io.IOException;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,14 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
 @Service
-@AllArgsConstructor
+
 public class FoodServiceImpl implements FoodService{
 
-    private final S3Client s3Client;
-    private final FoodRepository foodRepository;
+  @Autowired
+    private  S3Client s3Client;
+
+  @Autowired
+    private  FoodRepository foodRepository;
 
     @Value("${aws.s3.bucketname}")
     private String bucketName; 
