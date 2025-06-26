@@ -22,6 +22,7 @@ import in.fpretre.foodiesapi.io.FoodResponse;
 import in.fpretre.foodiesapi.repository.FoodRepository;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
@@ -95,6 +96,31 @@ public List<FoodResponse> readFoods() {
      return convertToResponse(existingFood);
     }
 
+    // Méthode pour supprimer un fichier sur AWS
+    @Override
+public boolean deleteFile(String filename) {
+    DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+        .bucket(bucketName)
+        .key(filename)
+        .build();
+    
+    s3Client.deleteObject(deleteObjectRequest);
+    return true;
+}
+
+// Méthode pour supprimer un food item
+@Override
+     public void deleteFood(String id) {
+     FoodResponse response = readFood(id);
+     String imageUrl = response.getImageUrl();
+     String filename = imageUrl.substring(imageUrl.lastIndexOf("/")+1);
+     boolean isFileDelete = deleteFile(filename);
+
+     if (isFileDelete) {
+      foodRepository.deleteById(response.getId( ));
+     }
+     }
+
      // Ici on vient transformer une food request en entity
      private FoodEntity convertToEntity(FoodRequest request) {
       return FoodEntity.builder()
@@ -116,5 +142,4 @@ public List<FoodResponse> readFoods() {
       .imageUrl(entity.getImageUrl())
       .build();
      }
-
 }
