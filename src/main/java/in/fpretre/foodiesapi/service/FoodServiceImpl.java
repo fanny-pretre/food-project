@@ -5,7 +5,9 @@ package in.fpretre.foodiesapi.service;
 import lombok.AllArgsConstructor;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,6 +78,22 @@ public class FoodServiceImpl implements FoodService{
       return convertToResponse(newFoodEntity);
 
      }
+
+     // Méthode qui retourne la liste de tous les foods items. 
+     @Override 
+public List<FoodResponse> readFoods() {
+    List<FoodEntity> databaseEntries =  foodRepository.findAll(); 
+    return databaseEntries.stream()
+        .map(object -> convertToResponse(object)) // transforme chaque FoodEntity en FoodResponse
+        .collect(Collectors.toList()); // rassemble tout dans une List
+}
+
+    // Méthode qui retourne un seul food item sinon si pas trouvé alors runtime exception
+    @Override
+    public  FoodResponse readFood(String id) {
+     FoodEntity existingFood = foodRepository.findById(id).orElseThrow(() -> new RuntimeException("Food not found for the id"+id));
+     return convertToResponse(existingFood);
+    }
 
      // Ici on vient transformer une food request en entity
      private FoodEntity convertToEntity(FoodRequest request) {

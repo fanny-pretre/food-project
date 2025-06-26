@@ -1,6 +1,10 @@
 package in.fpretre.foodiesapi.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -48,5 +52,15 @@ request = objectMapper.readValue(foodString, FoodRequest.class);
     }
 FoodResponse response = foodService.addFood(request, file); 
 return response;
+    }
+
+    @GetMapping
+    public List<FoodResponse> readFoods() {
+        return foodService.readFoods();
+    }
+
+    @GetMapping("/{id}")
+    public FoodResponse readFood(@PathVariable String id) {
+       return foodService.readFood(id);
     }
 }
