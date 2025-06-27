@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
 import "./ListFood.css";
 import { deleteFood, getFoodList } from "../../service/foodService";
@@ -11,7 +10,7 @@ const ListFood = () => {
     try {
       const data = await getFoodList();
       setList(data);
-    } catch (error) {
+    } catch {
       toast.error("Error while reading the foods.");
     }
   };

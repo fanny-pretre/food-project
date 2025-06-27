@@ -26,12 +26,8 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/api/foods")
 @AllArgsConstructor
-@CrossOrigin("*")
 
-// Création de la handler method
-
-
-public class FoodController {
+public class FoodController /* Création de la handler method*/ {
 
 
 // Injection d’un service métier (FoodService) qui s’occupera de la vraie logique : enregistrement en base de données, sauvegarde de fichier, etc.
