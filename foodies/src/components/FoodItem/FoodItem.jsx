@@ -4,7 +4,11 @@ const FoodItem = ({ name, description, price, imageUrl, id }) => {
   console.log(name);
   return (
     <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex justify-content-center">
-      <div className="card w-100">
+      <Link
+        className="card w-100"
+        to={`/food/${id}`}
+        style={{ textDecoration: "none" }}
+      >
         <img
           src={imageUrl}
           className="card-img-top"
@@ -36,7 +40,7 @@ const FoodItem = ({ name, description, price, imageUrl, id }) => {
             <i className="bi bi-heart"></i>
           </button>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };

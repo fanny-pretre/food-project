@@ -6,13 +6,15 @@ const Menubar = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container">
-        <img
-          src={assets.logo}
-          alt="logo"
-          className="mx-4"
-          height={48}
-          width={48}
-        />
+        <Link to="/">
+          <img
+            src={assets.logo}
+            alt="logo"
+            className="mx-4"
+            height={48}
+            width={48}
+          />
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
