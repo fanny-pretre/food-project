@@ -9,7 +9,7 @@ const Header = () => {
         <p className="col-md-8 fs-4">
           Discover the best food and drinks in Niort
         </p>
-        <Link to="/explore" className="btn btn-primary btn-large">
+        <Link to="/explore" className="btn btn-primary">
           {" "}
           Explore
         </Link>
