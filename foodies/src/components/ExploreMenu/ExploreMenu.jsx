@@ -3,7 +3,7 @@ import { categories } from "../../assets/assets";
 
 import "./ExploreMenu.css";
 
-const ExploreMenu = () => {
+const ExploreMenu = ({ category, setCategory }) => {
   const menuRef = useRef(null);
   const scrollLeft = () => {
     if (menuRef.current) {
@@ -43,10 +43,22 @@ const ExploreMenu = () => {
       >
         {categories.map((item, index) => {
           return (
-            <div key={index} className="text-center explore-menu-list-item">
+            <div
+              key={index}
+              className="text-center explore-menu-list-item"
+              onClick={() =>
+                setCategory((prev) =>
+                  prev === item.category ? "All" : item.category
+                )
+              }
+            >
               <img
                 src={item.icon}
-                className="rounded-circle"
+                className={
+                  item.category === category
+                    ? "rounded-circle active"
+                    : "rounded-circle"
+                }
                 height={128}
                 width={128}
               />
