@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const FoodItem = ({ name, description, price, imageUrl, id }) => {
   console.log(name);
   return (
@@ -27,7 +29,9 @@ const FoodItem = ({ name, description, price, imageUrl, id }) => {
           </div>
         </div>
         <div className="card-footer d-flex justify-content-between bg-light">
-          <button className="btn btn-primary btn-sm">View Food</button>
+          <Link className="btn btn-primary btn-sm" to={`food/${id}`}>
+            View Food
+          </Link>
           <button className="btn btn-outline-secondary btn-sm">
             <i className="bi bi-heart"></i>
           </button>
