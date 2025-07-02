@@ -4,19 +4,17 @@ const FoodItem = ({ name, description, price, imageUrl, id }) => {
   console.log(name);
   return (
     <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex justify-content-center">
-      <Link
-        className="card w-100"
-        to={`/food/${id}`}
-        style={{ textDecoration: "none" }}
-      >
-        <img
-          src={imageUrl}
-          className="card-img-top"
-          alt="Product Image"
-          height={300}
-          width={60}
-          style={{ objectFit: "cover" }}
-        />
+      <div className="card w-100">
+        <Link to={`/food/${id}`}>
+          <img
+            src={imageUrl}
+            className="card-img-top"
+            alt="Product Image"
+            height={300}
+            width={60}
+            style={{ objectFit: "cover" }}
+          />
+        </Link>
         <div className="card-body">
           <h5 className="card-title">{name}</h5>
           <p className="card-text">{description}</p>
@@ -36,11 +34,12 @@ const FoodItem = ({ name, description, price, imageUrl, id }) => {
           <Link className="btn btn-primary btn-sm" to={`food/${id}`}>
             View Food
           </Link>
-          <button className="btn btn-outline-secondary btn-sm">
-            <i className="bi bi-heart"></i>
+
+          <button className="btn btn-primary btn-sm">
+            <i className="bi bi-plus-circle"></i>
           </button>
         </div>
-      </Link>
+      </div>
     </div>
   );
 };
