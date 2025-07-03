@@ -31,6 +31,7 @@ export const StoreContextProvider = (props) => {
     increaseQty,
     decreaseQty,
     quantities,
+    setQuantities,
     removeFromCart,
   };
 
