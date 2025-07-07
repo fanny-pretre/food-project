@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import "./PlaceOrder.jsx";
 import { StoreContext } from "../../context/StoreContext.jsx";
 import { assets } from "../../assets/assets.js";
+import { calculateCartTotals } from "../../util/cartUtils.js";
 
 const PlaceOrder = () => {
   const { foodList, quantities, setQuantities } = useContext(StoreContext);
@@ -11,13 +12,10 @@ const PlaceOrder = () => {
   const cartItems = foodList.filter((food) => quantities[food.id] > 0);
 
   // calculation
-  const subtotal = cartItems.reduce(
-    (acc, food) => acc + food.price * quantities[food.id],
-    0
+  const { subtotal, shipping, tax, total } = calculateCartTotals(
+    cartItems,
+    quantities
   );
-  const shipping = subtotal === 0 ? 0.0 : 2.99;
-  const tax = subtotal * 0.1; // 10%
-  const total = subtotal + shipping + tax;
 
   return (
     <div className="container mt-4">
@@ -176,7 +174,11 @@ const PlaceOrder = () => {
 
               <hr className="my-4" />
 
-              <button className="w-100 btn btn-primary btn-lg" type="submit">
+              <button
+                className="w-100 btn btn-primary btn-lg"
+                type="submit"
+                disabled={cartItems.length === 0}
+              >
                 Continue to checkout
               </button>
             </form>
