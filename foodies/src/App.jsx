@@ -1,14 +1,14 @@
-import React from "react";
+import { Route, Routes } from "react-router-dom";
 
 import Menubar from "./components/Menubar/Menubar";
 import Home from "./pages/Home/Home";
 import Contact from "./pages/Contact/Contact";
 import ExploreFood from "./pages/ExploreFood/ExploreFood";
 import FoodDetails from "./pages/FoodDetails/FoodDetails";
-
-import { Route, Routes } from "react-router-dom";
 import Cart from "./pages/Cart/Cart";
 import PlaceOrder from "./pages/PlaceOrder/PlaceOrder";
+import Register from "./components/Register/Register";
+import Login from "./components/Login/Login";
 
 const App = () => {
   return (
@@ -22,6 +22,8 @@ const App = () => {
         <Route path="/food/:id" element={<FoodDetails />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<PlaceOrder />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </div>
   );
