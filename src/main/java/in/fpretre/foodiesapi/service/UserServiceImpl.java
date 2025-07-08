@@ -1,5 +1,6 @@
 package in.fpretre.foodiesapi.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import in.fpretre.foodiesapi.entity.UserEntity;
@@ -14,6 +15,8 @@ import lombok.AllArgsConstructor;
 public class UserServiceImpl implements UserService{
 
 private final UserRepository userRepository; 
+private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public UserResponse registerUser(UserRequest request) {
@@ -25,7 +28,7 @@ private final UserRepository userRepository;
     private UserEntity convertToEntity(UserRequest request) {
         return UserEntity.builder()
         .email(request.getEmail())
-        .password(request.getPassword())
+        .password(passwordEncoder.encode(request.getPassword()))
         .name(request.getName())
         .build();
     }
