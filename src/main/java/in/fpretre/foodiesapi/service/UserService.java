@@ -5,4 +5,6 @@ import in.fpretre.foodiesapi.io.UserRequest;
 
 public interface UserService {
 UserResponse registerUser(UserRequest request); 
+
+String findByUserId(); 
 }
