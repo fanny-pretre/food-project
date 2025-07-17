@@ -7,10 +7,12 @@ import icecream from "./icecream.png";
 import noodles from "./noodles.jpeg";
 import pizza from "./pizza.png";
 import salad from "./salad.png";
+import avatar from "./avatar.png";
 
 export const assets = {
   logo,
   cart,
+  avatar,
 };
 
 export const categories = [

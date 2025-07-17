@@ -7,7 +7,8 @@ import "./Menubar.css";
 
 const Menubar = () => {
   const [active, setActive] = useState("home");
-  const { quantities, token, setToken } = useContext(StoreContext);
+  const { quantities, setQuantities, token, setToken } =
+    useContext(StoreContext);
   const uniqueItemsinCart = Object.values(quantities).filter(
     (qty) => qty > 0
   ).length;
@@ -17,6 +18,7 @@ const Menubar = () => {
   const logout = () => {
     localStorage.removeItem("token");
     setToken("");
+    setQuantities({});
     navigate("/");
   };
 
@@ -122,9 +124,9 @@ const Menubar = () => {
                   aria-expanded="false"
                 >
                   <img
-                    src=""
+                    src={assets.avatar}
                     alt=""
-                    width={32}
+                    width={48}
                     height={32}
                     className="rounded-circle"
                   />
