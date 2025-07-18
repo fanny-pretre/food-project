@@ -39,7 +39,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
         .cors(Customizer.withDefaults()) // utilise le bean corsConfigurationSource
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/api/register", "/api/login", "/api/foods/**").permitAll()
+            .requestMatchers("/api/register", "/api/login", "/api/foods/**", "/api/orders/all", "api/orders/status/**").permitAll()
             .anyRequest().authenticated()
         )
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
