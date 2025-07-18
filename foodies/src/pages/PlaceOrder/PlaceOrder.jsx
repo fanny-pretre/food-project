@@ -1,12 +1,98 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+
+import { toast } from "react-toastify";
 
 import "./PlaceOrder.jsx";
 import { StoreContext } from "../../context/StoreContext.jsx";
 import { assets } from "../../assets/assets.js";
 import { calculateCartTotals } from "../../util/cartUtils.js";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const PlaceOrder = () => {
-  const { foodList, quantities, setQuantities } = useContext(StoreContext);
+  const { foodList, quantities, setQuantities, token } =
+    useContext(StoreContext);
+  const navigate = useNavigate();
+
+  const [data, setData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    address: "",
+    state: "",
+    city: "",
+    zip: "",
+  });
+
+  const onChangeHandler = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setData((data) => ({ ...data, [name]: value }));
+  };
+
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+    const orderData = {
+      userAddress: `${data.firstName}, ${data.lastName}, ${data.address}, ${data.city}, ${data.state}, ${data.zip}`,
+      phoneNumber: data.phoneNumber,
+      email: data.email,
+      orderedItems: cartItems.map((item) => ({
+        foodId: item.foodId,
+        quantity: quantities[item.id],
+        price: item.price * quantities[item.id],
+        category: item.category,
+        imageUrl: item.imageUrl,
+        description: item.description,
+        name: item.name,
+      })),
+      amount: total.toFixed(2),
+      orderStatus: "Preparing",
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/orders/create",
+        orderData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (response.status === 201) {
+        // Normalement on initiate le paiement ici mais moi je vais juste mettre un toast.
+        toast.success("Successful Payment - Feature in Progress ");
+        await clearCart();
+        navigate("/myorders");
+      } else {
+        await deleteOrder();
+        toast.error("Unable to place order. Please try again");
+        navigate("/");
+      }
+    } catch {
+      toast.error("Unable to place order. Please try again");
+    }
+  };
+
+  const deleteOrder = async (orderId) => {
+    try {
+      await axios.delete("http://localhost:8080/api/orders/" + orderId, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    } catch {
+      toast.error("Somethiing went wrong. Contact support");
+    }
+  };
+
+  const clearCart = async () => {
+    try {
+      await axios.delete("http://localhost:8080/api/cart/clear", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setQuantities({});
+    } catch {
+      toast.error("Error while clearing the cart.");
+    }
+  };
 
   //cart items
   const cartItems = foodList.filter((food) => quantities[food.id] > 0);
@@ -73,7 +159,7 @@ const PlaceOrder = () => {
 
           <div className="col-md-7 col-lg-8">
             <h4 className="mb-3">Billing address</h4>
-            <form className="needs-validation" noValidate>
+            <form className="needs-validation" onSubmit={onSubmitHandler}>
               <div className="row g-3">
                 <div className="col-sm-6">
                   <label htmlFor="firstName" className="form-label">
@@ -85,6 +171,9 @@ const PlaceOrder = () => {
                     id="firstName"
                     placeholder="Jane"
                     required
+                    name="firstName"
+                    onChange={onChangeHandler}
+                    value={data.firstName}
                   />
                 </div>
                 <div className="col-sm-6">
@@ -97,6 +186,9 @@ const PlaceOrder = () => {
                     id="lastName"
                     placeholder="Doe"
                     required
+                    name="lastName"
+                    onChange={onChangeHandler}
+                    value={data.lastName}
                   />
                 </div>
                 <div className="col-12">
@@ -111,19 +203,25 @@ const PlaceOrder = () => {
                       id="email"
                       placeholder="Email"
                       required
+                      name="email"
+                      onChange={onChangeHandler}
+                      value={data.email}
                     />
                   </div>
                 </div>
                 <div className="col-12">
-                  <label htmlFor="phone" className="form-label">
+                  <label htmlFor="phoneNumber" className="form-label">
                     Phone Number
                   </label>
                   <input
                     type="number"
                     className="form-control"
-                    id="phone"
+                    id="phoneNumber"
                     placeholder="0606060606"
                     required
+                    name="phoneNumber"
+                    onChange={onChangeHandler}
+                    value={data.phoneNumber}
                   />
                 </div>
 
@@ -137,25 +235,42 @@ const PlaceOrder = () => {
                     id="address"
                     placeholder="1234 Main St"
                     required
+                    name="address"
+                    onChange={onChangeHandler}
+                    value={data.address}
                   />
                 </div>
 
                 <div className="col-md-5">
-                  <label htmlFor="country" className="form-label">
-                    Country
-                  </label>
-                  <select className="form-select" id="country" required>
-                    <option value="">Choose...</option>
-                    <option>France</option>
-                  </select>
-                </div>
-                <div className="col-md-4">
                   <label htmlFor="state" className="form-label">
                     State
                   </label>
-                  <select className="form-select" id="state" required>
+                  <select
+                    className="form-select"
+                    id="state"
+                    required
+                    name="state"
+                    onChange={onChangeHandler}
+                    value={data.state}
+                  >
                     <option value="">Choose...</option>
                     <option>Deux-Sèvres</option>
+                  </select>
+                </div>
+                <div className="col-md-4">
+                  <label htmlFor="city" className="form-label">
+                    City
+                  </label>
+                  <select
+                    className="form-select"
+                    id="city"
+                    required
+                    name="city"
+                    onChange={onChangeHandler}
+                    value={data.city}
+                  >
+                    <option value="">Choose...</option>
+                    <option>Niort</option>
                   </select>
                 </div>
                 <div className="col-md-3">
@@ -168,6 +283,9 @@ const PlaceOrder = () => {
                     id="zip"
                     placeholder="79000"
                     required
+                    name="zip"
+                    onChange={onChangeHandler}
+                    value={data.zip}
                   />
                 </div>
               </div>

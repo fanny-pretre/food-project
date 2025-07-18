@@ -36,7 +36,7 @@ const FoodItem = ({ name, description, price, imageUrl, id }) => {
           <Link className="btn btn-primary btn-sm" to={`food/${id}`}>
             View Food
           </Link>
-          {quantities[id] > 0 ? (
+          {quantities?.[id] > 0 ? (
             <div className="d-flex align-items-center gap-2">
               <button
                 className="btn btn-danger btn-sm"
